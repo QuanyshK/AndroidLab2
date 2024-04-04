@@ -6,8 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiService {
-    @GET("cats?family_friendly=5")
-    fun fetchCats(): Call<List<Cat>>
-    fun catByName(@Query("name") name: String): Call<List<Cat>>
+    @GET("cats")
+    fun catBy(@Query("name") name: String? = null,   @Query("family_friendly") family_friendly: List<Int>? = null): Call<List<Cat>>
 
 }

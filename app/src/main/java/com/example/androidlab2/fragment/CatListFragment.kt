@@ -14,7 +14,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-@Suppress("UNREACHABLE_CODE")
 class CatListFragment : Fragment() {
     companion object {
         fun newInstance() = CatListFragment()
@@ -32,57 +31,55 @@ class CatListFragment : Fragment() {
     ): View {
         _binding = FragmentCatListBinding.inflate(inflater, container, false)
         return binding.root
-        searchView = binding.search
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText.isNullOrBlank()) {
-                    ApiClient.instance.fetchCats()
-                } else {
-                    fetchCatsByName(newText)
-
-                }
-                return true
-            }
-        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupUI()
-        ApiClient.instance.fetchCats().enqueue(object : Callback<List<Cat>> {
-            override fun onResponse(call: Call<List<Cat>>, response: Response<List<Cat>>) {
-                val data = response.body()
-                data?.let {
-                    adapter.submitList(it)
-                }
+        searchView = binding.search
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
 
+                return true
             }
 
-            override fun onFailure(call: Call<List<Cat>>, t: Throwable) {
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let { fetchCatsByName(it) }
+                return false
             }
         })
+        with(binding){
+            lowBtn.setOnClickListener {
+                fetchCatsByFF(intArrayOf(1, 2).toList())
+            }
+
+            avgBtn.setOnClickListener {
+                fetchCatsByFF(intArrayOf(3).toList())
+            }
+            highBtn.setOnClickListener {
+                fetchCatsByFF(intArrayOf(4, 5).toList())
+            }
+            reset.setOnClickListener {
+                fetchCatsByFF(intArrayOf(6).toList())
+            }
+        }
 
     }
-
-
     private fun setupUI() {
-        with(binding){
+        with(binding) {
             catList.adapter = this@CatListFragment.adapter
         }
     }
-    private fun fetchCatsByName(query: String) {
-        ApiClient.instance.catByName(query).enqueue(object : Callback<List<Cat>> {
-            override fun onResponse(call: Call<List<Cat>>, response: Response<List<Cat>>) {
-                val data = response.body()
-                data?.let {
-                    adapter.submitList(it)
-                }
 
+    private fun fetchAllCats() {
+        ApiClient.instance.catBy("").enqueue(object : Callback<List<Cat>> {
+            override fun onResponse(call: Call<List<Cat>>, response: Response<List<Cat>>) {
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    data?.let {
+                    }
+                }
             }
 
             override fun onFailure(call: Call<List<Cat>>, t: Throwable) {
@@ -90,9 +87,40 @@ class CatListFragment : Fragment() {
         })
     }
 
+    private fun fetchCatsByName(query: String) {
+        ApiClient.instance.catBy(query).enqueue(object : Callback<List<Cat>> {
+            override fun onResponse(call: Call<List<Cat>>, response: Response<List<Cat>>) {
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    data?.let {
+                        adapter.submitList(it)
+                    }
+                }
+            }
 
-
-
-
-
+            override fun onFailure(call: Call<List<Cat>>, t: Throwable) {
+            }
+        })
+    }
+    private fun fetchCatsByFF(familyFriendly: List<Int>) {
+        ApiClient.instance.catBy("", familyFriendly).enqueue(object : Callback<List<Cat>> {
+            override fun onResponse(call: Call<List<Cat>>, response: Response<List<Cat>>) {
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    data?.let {
+                        adapter.submitList(it)
+                    }
+                }
+            }
+            override fun onFailure(call: Call<List<Cat>>, t: Throwable) {
+            }
+        })
+    }
 }
+
+
+
+
+
+
+
