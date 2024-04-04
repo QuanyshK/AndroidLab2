@@ -1,0 +1,104 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                   xmlns:tools="http://schemas.android.com/tools"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:layout_marginBottom="12dp"
+                                   android:elevation="4dp"
+                                   app:cardCornerRadius="12dp">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:orientation="horizontal">
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+
+                        tools:text="name" />
+
+                <TextView
+                        android:id="@+id/origin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+
+                        android:textSize="14sp"
+
+                        tools:text="origin" />
+
+                <TextView
+                        android:id="@+id/min_lifeexpectancy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:textSize="14sp"
+
+                        tools:text="Minimal life expectancy" />
+                <TextView
+                        android:id="@+id/min_weight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+
+                        android:textSize="14sp"
+
+
+                        tools:text="Min weight" />
+                <TextView
+                        android:id="@+id/other_pets_friendly"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+
+                        tools:text="other_pets_friendly" />
+                <TextView
+                        android:id="@+id/playfulness"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+
+                        tools:text="playfulness" />
+                <TextView
+                        android:id="@+id/health"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        tools:text="health" />
+
+
+
+            </LinearLayout>
+
+            <ImageView
+                    android:id="@+id/cat_image"
+                    android:layout_width="135dp"
+                    android:layout_height="135dp"
+
+                    android:contentDescription="@null" />
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
